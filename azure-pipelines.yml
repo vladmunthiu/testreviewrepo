@@ -1,0 +1,35 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+jobs:
+- job: build
+  pool:
+    name: Hosted Windows 2019 with VS2019
+    demands: azureps
+
+  steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'Build'
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Tests'
+      inputs:
+        command: test
+        projects: '**/*Tests/*.csproj'
+        arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    - task: AzurePowerShell@3
+      displayName: 'Validate ARM template'
+      inputs:
+        azureSubscription: 'pipelineconnectionname'
+        ScriptPath: 'SampleApplication/SampleApplication.ResourceGroup/Deploy-AzureResourceGroup.ps1'
+        ScriptArguments: -ResourceGroupName 'vladtestpipeline' -ResourceGroupLocation 'centralus' -StorageAccountName '' -TemplateFile 'azuredeploy.json' -TemplateParametersFile 'devenvdeploy.parameters.json' -ArtifactStagingDirectory '.' -DSCSourceFolder '.\DSC' -ValidateOnly
+        azurePowerShellVersion: LatestVersion
+
