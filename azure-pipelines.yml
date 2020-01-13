@@ -34,7 +34,7 @@ steps:
 - task: AzurePowerShell@3
   displayName: 'Validate ARM template'
   inputs:
-    azureSubscription: 'Visual Studio Enterprise(35ab58e8-db6d-4f42-8908-a8047219cb14)'
+    azureSubscription: 'pipelineconnectionname'
     ScriptPath: 'SampleApplication/SampleApplication.ResourceGroup/Deploy-AzureResourceGroup.ps1'
     ScriptArguments: -ResourceGroupName 'vladtestpipeline' -ResourceGroupLocation 'centralus' -StorageAccountName '' -TemplateFile 'SampleApplication\SampleApplication.ResourceGroup\azuredeploy.json' -TemplateParametersFile 'SampleApplication\SampleApplication.ResourceGroup\devenvdeploy.parameters.json' -ArtifactStagingDirectory '.' -DSCSourceFolder '.\DSC' -ValidateOnly
     azurePowerShellVersion: LatestVersion
