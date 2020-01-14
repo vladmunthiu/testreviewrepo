@@ -43,7 +43,19 @@ stages:
           projects: '**/*.csproj'
           arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish artifact: drop'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
 
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish ARM: drop'
+        inputs:
+          PathtoPublish: 'SampleApplication/SampleApplication.ResourceGroup/'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
 #      - task: DotNetCoreCLI@2
 #        displayName: 'Package'
 #        inputs:
