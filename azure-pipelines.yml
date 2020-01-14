@@ -40,7 +40,10 @@ stages:
         inputs:
           command: 'publish'
           publishWebProjects: true
+          projects: '**/*.csproj'
           arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+
+
 #      - task: DotNetCoreCLI@2
 #        displayName: 'Package'
 #        inputs:
