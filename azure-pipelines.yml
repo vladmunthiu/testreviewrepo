@@ -39,7 +39,7 @@ stages:
         displayName: 'Package'
         inputs:
           command: 'publish'
-          publishWebProjects: true
+          publishWebProjects: false
           projects: '**/*.csproj'
           arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 
