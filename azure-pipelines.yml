@@ -73,6 +73,13 @@ stages:
           PathtoPublish: 'SampleApplication/SampleApplication.ResourceGroup/'
           ArtifactName: 'drop'
           publishLocation: 'Container'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Functional Tests'
+        inputs:
+          PathtoPublish: 'SampleApplication/SampleApplication.FunctionalTests/bin/Debug/netcoreapp2.1/'
+          ArtifactName: 'FunctionalTests'
+          publishLocation: 'Container'
 #      - task: DotNetCoreCLI@2
 #        displayName: 'Package'
 #        inputs:
