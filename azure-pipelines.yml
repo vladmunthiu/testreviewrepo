@@ -28,6 +28,13 @@ stages:
           command: test
           projects: 'SampleApplication\SampleApplication.Tests\SampleApplication.Tests.csproj'
           arguments: '--configuration $(buildConfiguration) --collect "XPlat Code coverage"'
+
+      - task: PublishCodeCoverageResults@1
+        inputs:
+          codeCoverageTool: 'Cobertura'
+          summaryFileLocation: 'SampleApplication\SampleApplication.Tests\TestResults\*.*\*cobertura.xml'
+          failIfCoverageEmpty: true
+          
       - task: AzurePowerShell@3
         displayName: 'Validate ARM template'
         inputs:
