@@ -60,6 +60,15 @@ stages:
           publishWebProjects: false
           projects: '**/*.csproj'
           arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+      
+      - task: DotNetCoreCLI@2
+        displayName: 'Package functional tests'
+        inputs:
+          command: 'publish'
+          publishWebProjects: false
+          projects: 'SampleApplication\SampleApplication.FunctionalTests/SampleApplication.FunctionalTests.csproj'
+          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/FunctionalTests'
+          zipAfterPublish: false
 
       - task: PublishBuildArtifacts@1
         displayName: 'Publish artifact: drop'
