@@ -78,7 +78,7 @@ stages:
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Functional Tests'
         inputs:
-          PathtoPublish: 'SampleApplication/SampleApplication.FunctionalTests/bin/Debug/netcoreapp2.1/'
+          PathtoPublish: 'SampleApplication/SampleApplication.FunctionalTests/bin/Release/netcoreapp2.1/publish/'
           ArtifactName: 'FunctionalTests'
           publishLocation: 'Container'
 #      - task: DotNetCoreCLI@2
