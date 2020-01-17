@@ -58,7 +58,7 @@ stages:
         inputs:
           command: 'publish'
           publishWebProjects: false
-          projects: '**/*.csproj'
+          projects: 'SampleApplication/SampleApplication/SampleApplication.csproj'
           arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
       
       - task: DotNetCoreCLI@2
@@ -66,7 +66,7 @@ stages:
         inputs:
           command: 'publish'
           publishWebProjects: false
-          projects: 'SampleApplication\SampleApplication.FunctionalTests/SampleApplication.FunctionalTests.csproj'
+          projects: 'SampleApplication/SampleApplication.FunctionalTests/SampleApplication.FunctionalTests.csproj'
           arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/FunctionalTests'
           zipAfterPublish: false
 
@@ -84,12 +84,12 @@ stages:
           ArtifactName: 'drop'
           publishLocation: 'Container'
 
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish Functional Tests'
-        inputs:
-          PathtoPublish: 'FunctionalTests/SampleApplication.FunctionalTests/'
-          ArtifactName: 'FunctionalTests'
-          publishLocation: 'Container'
+      #- task: PublishBuildArtifacts@1
+      #  displayName: 'Publish Functional Tests'
+      #  inputs:
+      #    PathtoPublish: 'FunctionalTests/SampleApplication.FunctionalTests/'
+      #    ArtifactName: 'FunctionalTests'
+      #    publishLocation: 'Container'
 #      - task: DotNetCoreCLI@2
 #        displayName: 'Package'
 #        inputs:
