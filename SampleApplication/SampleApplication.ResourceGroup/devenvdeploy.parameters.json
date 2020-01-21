@@ -13,6 +13,9 @@
     },
     "hostingPlanName": {
       "value": "sampleapp-dev-hostplan"
+    },
+    "appInsightsName": {
+      "value": "sampleapp-dev-ai"
     }
   }
 }

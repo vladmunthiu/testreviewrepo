@@ -13,6 +13,9 @@
     },
     "hostingPlanName": {
       "type": "string"
+    },
+    "appInsightsName": {
+      "type": "string"
     }
   },
   "resources": [
@@ -130,7 +133,7 @@
     },
     {
       "apiVersion": "2018-05-01-preview",
-      "name": "[parameters('functionAppName')]",
+      "name": "[parameters('appInsightsName')]",
       "type": "microsoft.insights/components",
       "location": "[resourceGroup().location]",
       "tags": {
