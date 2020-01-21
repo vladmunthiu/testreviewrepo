@@ -128,7 +128,7 @@
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
         "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
-        "[resourceId('microsoft.insights/components/', parameters('functionAppName'))]"
+        "[resourceId('microsoft.insights/components/', parameters('appInsightsName'))]"
       ]
     },
     {
