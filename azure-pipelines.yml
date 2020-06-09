@@ -16,73 +16,10 @@ stages:
       demands: azureps
 
     steps:
-      - task: DotNetCoreCLI@2
-        displayName: 'Build'
-        inputs:
-          command: 'build'
-          projects: '**/*.csproj'
 
-      - task: DotNetCoreCLI@2
-        displayName: 'Tests'
+      - task: CmdLine@2
         inputs:
-          command: test
-          projects: 'SampleApplication\SampleApplication.Tests\SampleApplication.Tests.csproj'
-          arguments: '--configuration $(buildConfiguration) --collect "XPlat Code coverage"'
-
-      - task: DotNetCoreCLI@2
-        inputs:
-            command: custom
-            custom: tool
-            arguments: install --tool-path . dotnet-reportgenerator-globaltool
-        displayName: Install ReportGenerator tool
-  
-      - script: reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura"
-        displayName: Create reports
-  
-      - task: PublishCodeCoverageResults@1
-        displayName: 'Publish code coverage'
-        inputs:
-          codeCoverageTool: Cobertura
-          summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml 
-          
-      - task: AzurePowerShell@3
-        displayName: 'Validate ARM template'
-        inputs:
-          azureSubscription: 'pipelineconnectionname'
-          ScriptPath: 'SampleApplication/SampleApplication.ResourceGroup/Deploy-AzureResourceGroup.ps1'
-          ScriptArguments: -ResourceGroupName 'vladtestpipeline' -ResourceGroupLocation 'centralus' -StorageAccountName '' -TemplateFile 'azuredeploy.json' -TemplateParametersFile 'devenvdeploy.parameters.json' -ArtifactStagingDirectory '.' -DSCSourceFolder '.\DSC' -ValidateOnly
-          azurePowerShellVersion: LatestVersion
-      
-      - task: DotNetCoreCLI@2
-        displayName: 'Package'
-        inputs:
-          command: 'publish'
-          publishWebProjects: false
-          projects: 'SampleApplication/SampleApplication/SampleApplication.csproj'
-          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-      
-      - task: DotNetCoreCLI@2
-        displayName: 'Package functional tests'
-        inputs:
-          command: 'publish'
-          publishWebProjects: false
-          projects: 'SampleApplication/SampleApplication.FunctionalTests/SampleApplication.FunctionalTests.csproj'
-          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/FunctionalTests'
-          zipAfterPublish: false
-
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish artifact: drop'
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'drop'
-          publishLocation: 'Container'
-
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish ARM: drop'
-        inputs:
-          PathtoPublish: 'SampleApplication/SampleApplication.ResourceGroup/'
-          ArtifactName: 'drop'
-          publishLocation: 'Container'
+          script: 'choco install winrar' 
 
       #- task: PublishBuildArtifacts@1
       #  displayName: 'Publish Functional Tests'
