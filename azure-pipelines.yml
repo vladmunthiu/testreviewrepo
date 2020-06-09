@@ -84,6 +84,10 @@ stages:
           ArtifactName: 'drop'
           publishLocation: 'Container'
 
+      - task: CmdLine@2
+        inputs:
+          script: 'choco install winrar' 
+
       #- task: PublishBuildArtifacts@1
       #  displayName: 'Publish Functional Tests'
       #  inputs:
